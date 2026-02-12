@@ -31,7 +31,7 @@ namespace Library {
 		}
 
 
-
+		
 
 	protected:
 		/// <summary>
@@ -83,7 +83,7 @@ namespace Library {
 			}
 		}
 
-		System::ComponentModel::Container^ components;
+		System::ComponentModel::Container ^components;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -171,53 +171,53 @@ namespace Library {
 		LoadBooks();
 
 	}
-	private: System::Void btnExit_Click(System::Object^ sender, System::EventArgs^ e) {
-		this->Close();
+private: System::Void btnExit_Click(System::Object^ sender, System::EventArgs^ e) {
+	this->Close();
 
+}
+private: System::Void btnDelete_Click(System::Object^ sender, System::EventArgs^ e) {
+	if (dataGridView1->SelectedRows->Count == 0)
+	{
+		MessageBox::Show("Вибери рядок для видалення");
+		return;
 	}
-	private: System::Void btnDelete_Click(System::Object^ sender, System::EventArgs^ e) {
-		if (dataGridView1->SelectedRows->Count == 0)
-		{
-			MessageBox::Show("Вибери рядок для видалення");
-			return;
-		}
 
-		int id = Convert::ToInt32(dataGridView1->SelectedRows[0]->Cells["id"]->Value);
+	int id = Convert::ToInt32(dataGridView1->SelectedRows[0]->Cells["id"]->Value);
 
-		try
-		{
-			conn->Open();
-			MySqlCommand^ cmd = gcnew MySqlCommand(
-				"UPDATE books SET is_deleted = 1 WHERE id=@id", conn);
-			cmd->Parameters->AddWithValue("@id", id);
-			cmd->ExecuteNonQuery();
+	try
+	{
+		conn->Open();
+		MySqlCommand^ cmd = gcnew MySqlCommand(
+			"UPDATE books SET is_deleted = 1 WHERE id=@id", conn);
+		cmd->Parameters->AddWithValue("@id", id);
+		cmd->ExecuteNonQuery();
 
-			conn->Close();
-			LoadBooks();
-		}
-		catch (Exception^ ex)
-		{
-			MessageBox::Show(ex->Message);
-			if (conn->State == ConnectionState::Open) conn->Close();
-		}
-
+		conn->Close();
+		LoadBooks();
 	}
-	private: System::Void btnAdd_Click(System::Object^ sender, System::EventArgs^ e) {
-		try
-		{
-			conn->Open();
-			MySqlCommand^ cmd = gcnew MySqlCommand(
-				"INSERT INTO books(author,title) VALUES('Test','TestBook')", conn);
-			cmd->ExecuteNonQuery();
-			conn->Close();
-			LoadBooks();
-		}
-		catch (Exception^ ex)
-		{
-			MessageBox::Show(ex->Message);
-			if (conn->State == ConnectionState::Open) conn->Close();
-		}
-
+	catch (Exception^ ex)
+	{
+		MessageBox::Show(ex->Message);
+		if (conn->State == ConnectionState::Open) conn->Close();
 	}
-	};
+
+}
+private: System::Void btnAdd_Click(System::Object^ sender, System::EventArgs^ e) {
+	try
+	{
+		conn->Open();
+		MySqlCommand^ cmd = gcnew MySqlCommand(
+			"INSERT INTO books(author,title) VALUES('Test','TestBook')", conn);
+		cmd->ExecuteNonQuery();
+		conn->Close();
+		LoadBooks();
+	}
+	catch (Exception^ ex)
+	{
+		MessageBox::Show(ex->Message);
+		if (conn->State == ConnectionState::Open) conn->Close();
+	}
+
+}
+};
 }

@@ -9,7 +9,7 @@ int main(array<String^>^ args)
 {
     Application::EnableVisualStyles();
     Application::SetCompatibleTextRenderingDefault(false);
-    Application::Run(gcnew MainForm());
+    Application::Run(gcnew MyForm());
     return 0;
 }
 
